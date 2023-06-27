@@ -7,6 +7,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,9 @@ import java.io.IOException;
 public class HellobootApplication {
 
 	public static void main(String[] args) {
-
+		GenericApplicationContext applicationContext = new GenericApplicationContext();
+		applicationContext.registerBean(HelloController.class);
+		applicationContext.refresh();
 		//톰캣 외의 제티 같은 다른 웹서버도 이용가능
 		ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
 		WebServer webServer = serverFactory.getWebServer(servletContext -> {
@@ -34,20 +37,17 @@ public class HellobootApplication {
 				protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 					//인증, 보안과 같은 공통기능을 프론트 컨트롤러가 하고
-					HelloController helloController = new HelloController();
 					//서블릿 컨테이너의 매핑기능을 프론트 컨트롤러가 담당함
 					if(req.getRequestURI().equals("/hello") && req.getMethod().equals(HttpMethod.GET.name())){
 						String name = req.getParameter("/hello");
 
+						HelloController helloController = applicationContext.getBean(HelloController.class);
 						String ret = helloController.hello(name);
 
-						resp.setStatus(HttpStatus.OK.value());
-						resp.setHeader(HttpHeaders.CONTENT_TYPE,MediaType.TEXT_PLAIN_VALUE);
+						resp.setContentType(MediaType.TEXT_PLAIN_VALUE);
 						resp.getWriter().println(ret);
 					}
-					else if(req.getRequestURI().equals("/user")){
-						//
-					}else{
+					else{
 						resp.setStatus(HttpStatus.NOT_FOUND.value());
 					}
 				}
