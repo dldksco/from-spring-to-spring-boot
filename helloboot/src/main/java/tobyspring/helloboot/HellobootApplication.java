@@ -40,7 +40,14 @@ public class HellobootApplication {
 					//서블릿 컨테이너의 매핑기능을 프론트 컨트롤러가 담당함
 					if(req.getRequestURI().equals("/hello") && req.getMethod().equals(HttpMethod.GET.name())){
 						String name = req.getParameter("/hello");
-
+						/**
+						 * Front Controller가 직접 new를 선언해서 쓰는 거랑 뭐가 다를까?
+						 * 여러가지 주요한 스프링 컨테이너들이 할 수 있는 계속 적용 가능한 기본적인 구조를 짜놓음
+						 * 스프링 컨테이너는 오브젝트를 만들 때 딱 한 번만 만들음
+						 * 실제로는 여러 서블릿이 있을 수 있음 해당 오브젝트를 계속 동일한 오브젝트를 리턴하게 할 수 있음
+						 * 스프링 컨테이너를 Singletone registry라고도 함
+						 * 매 요청마다 새 오브젝트를 만들지않고 만들어둔 오브젝트를 재사용함
+						 */
 						HelloController helloController = applicationContext.getBean(HelloController.class);
 						String ret = helloController.hello(name);
 
