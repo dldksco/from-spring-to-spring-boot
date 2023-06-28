@@ -1,7 +1,16 @@
 package tobyspring.helloboot;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.util.Objects;
 
+/**
+ * 디스패치서블릿이 매핑정보를 만들때 클래스에 붙어있는 정보를 확인하고
+ * 그 후, 메소드 레벨에 붙어있는 정보를 추가
+ */
+
+@RequestMapping("/hello")
 public class HelloController {
     private final HelloService helloService;
 
@@ -13,6 +22,16 @@ public class HelloController {
     public HelloController(HelloService helloService) {
         this.helloService = helloService;
     }
+
+
+    /**
+     * @ResponseBody를 안붙이고고,
+     * 이런 식으로 스트링을 리턴한다면
+     * 그 스트링값에 해당하는 뷰가 있는지 체크함
+     * 우리는 뷰가 없으니 404가나
+     */
+
+    @GetMapping
 
     public String hello(String name){
         return helloService.sayHello(Objects.requireNonNull(name));
