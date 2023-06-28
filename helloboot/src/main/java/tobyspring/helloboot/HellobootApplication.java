@@ -25,7 +25,18 @@ public class HellobootApplication {
 
 	public static void main(String[] args) {
 		GenericApplicationContext applicationContext = new GenericApplicationContext();
+		/**
+		 * DI란? 인터페이스를 중간에 잘 두고 코드레벨의 의존관계를 제거하고 동적으로 스프링 컨테이너(어셈블러)를 통해서 둘 사이의 연관관계를 주입을 통해 지정하도록 만들음
+		 */
 		applicationContext.registerBean(HelloController.class);
+		/**
+		 * 심플헬로우 서비스를 어떻게 헬로우 컨트롤러에 넣을까?
+		 * 원래는 xml에서 빈을 정의해서 클래스이름 정의하고 생성자에 어떤 빈을 넣어줄지 정했음
+		 * 그럼 컨트롤러보다 서비스가 먼저 만들어져야 되는 거 아니야?
+		 * 그건 스프링 컨테이너가 알아서 잘 처리함
+		 */
+		applicationContext.registerBean(SimpleHelloService.class);
+
 		applicationContext.refresh();
 		//톰캣 외의 제티 같은 다른 웹서버도 이용가능
 		ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
