@@ -26,7 +26,20 @@ import java.io.IOException;
 public class HellobootApplication {
 
 	public static void main(String[] args) {
-		GenericWebApplicationContext applicationContext = new GenericWebApplicationContext();
+		GenericWebApplicationContext applicationContext = new GenericWebApplicationContext() {
+			@Override
+			protected void onRefresh() {
+				super.onRefresh();
+
+				ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
+				WebServer webServer = serverFactory.getWebServer(servletContext -> {
+					servletContext.addServlet("dispatcherServlet",
+							new DispatcherServlet(this)
+					).addMapping("/*");
+				});
+				webServer.start();
+			}
+		};
 		/**
 		 * DI란? 인터페이스를 중간에 잘 두고 코드레벨의 의존관계를 제거하고 동적으로 스프링 컨테이너(어셈블러)를 통해서 둘 사이의 연관관계를 주입을 통해 지정하도록 만들
 		 */
@@ -41,13 +54,7 @@ public class HellobootApplication {
 
 		applicationContext.refresh();
 		//톰캣 외의 제티 같은 다른 웹서버도 이용가능
-		ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
-		WebServer webServer = serverFactory.getWebServer(servletContext -> {
-			servletContext.addServlet("dispatcherServlet",
-						new DispatcherServlet(applicationContext)
-					).addMapping("/*");
-				});
-		webServer.start();
+
 
 	}
 
