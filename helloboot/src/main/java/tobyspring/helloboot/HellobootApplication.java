@@ -26,7 +26,7 @@ public class HellobootApplication {
 	public static void main(String[] args) {
 		GenericApplicationContext applicationContext = new GenericApplicationContext();
 		/**
-		 * DI란? 인터페이스를 중간에 잘 두고 코드레벨의 의존관계를 제거하고 동적으로 스프링 컨테이너(어셈블러)를 통해서 둘 사이의 연관관계를 주입을 통해 지정하도록 만들음
+		 * DI란? 인터페이스를 중간에 잘 두고 코드레벨의 의존관계를 제거하고 동적으로 스프링 컨테이너(어셈블러)를 통해서 둘 사이의 연관관계를 주입을 통해 지정하도록 만들
 		 */
 		applicationContext.registerBean(HelloController.class);
 		/**
@@ -44,9 +44,15 @@ public class HellobootApplication {
 
 			servletContext.addServlet("frontcontroller", new HttpServlet() {
 				//요청과 응답을 만드는데 필요한 오브젝트를 파라미터로 넣음
+
+
 				@Override
 				protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+					/**
+					 * 서블릿 컨테이너를 관리하지 않도록 개발을 해야함
+					 * 하지만 애플리케이션 로직과 긴밀하게 연관이 된 것이 서블릿에 나옴
+					 * ex) 매핑 웹요청을 가지고 이거를 처리 해줄 컨트롤러 컨트롤러 메소드가 어떤 것인지 연결 시켜줌
+					 */
 					//인증, 보안과 같은 공통기능을 프론트 컨트롤러가 하고
 					//서블릿 컨테이너의 매핑기능을 프론트 컨트롤러가 담당함
 					if(req.getRequestURI().equals("/hello") && req.getMethod().equals(HttpMethod.GET.name())){
