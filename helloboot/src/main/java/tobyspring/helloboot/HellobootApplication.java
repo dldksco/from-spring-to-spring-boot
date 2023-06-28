@@ -36,13 +36,21 @@ import java.io.IOException;
  * @CoponentScan이 붙어있으면
  * 이클래스가 있는 패키지부터 하위패키지를 뒤져서 @Component가 들어있는 모든 것들을 빈으로 등록함
  * 장점 : 새로운 빈 만들어서 추가할때 매번 어디다가 구성정보를 다시 등록해줄 필요없이 알아서 @Component만 달면 해결됨
- * 단점 : 정말 빈으로 등록하는 클래스가 많아진다면 정확하게 어떤 것들이 등록되는가 찾는게 매우번거로움 하지만 패키지구성과 모듈화를 잘하면 됨
+ * 단점 : 정말 빈으로 등록하는 클래스가 많아진다면 정확하게 어떤 것들이 등록되는가 찾는게 매우번거로움 하지만 패키지구성과 모듈화를 잘하면
  */
 @Configuration
 @ComponentScan
 public class HellobootApplication {
 
+	@Bean
+	public ServletWebServerFactory serverFactory(){
+		return new TomcatServletWebServerFactory();
+	}
 
+	@Bean
+	public DispatcherServlet dispatcherServlet() {
+		return new DispatcherServlet();
+	}
 
 	public static void main(String[] args) {
 		//자바 컨픽을 읽을 수 없음
@@ -52,7 +60,10 @@ public class HellobootApplication {
 			protected void onRefresh() {
 				super.onRefresh();
 
-				ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
+				ServletWebServerFactory serverFactory = this.getBean(ServletWebServerFactory.class);
+				DispatcherServlet dispatcherServlet = this.getBean(DispatcherServlet.class);
+//				dispatcherServlet.setApplicationContext(this); 없어도 스프링이 직접 주입해줌
+
 				WebServer webServer = serverFactory.getWebServer(servletContext -> {
 					servletContext.addServlet("dispatcherServlet",
 							new DispatcherServlet(this)
