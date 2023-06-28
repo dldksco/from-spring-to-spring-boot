@@ -41,7 +41,7 @@ import java.io.IOException;
 @Configuration
 @ComponentScan
 public class HellobootApplication {
-
+	//없애면 이런 오류 발생 Web application could not be started as there was no org.springframework.boot.web.servlet.server.ServletWebServerFactory bean defined in the context.
 	@Bean
 	public ServletWebServerFactory serverFactory(){
 		return new TomcatServletWebServerFactory();
@@ -55,7 +55,7 @@ public class HellobootApplication {
 	public static void main(String[] args) {
 		//자바 컨픽을 읽을 수 없음
 		//		GenericWebApplicationContext applicationContext = new GenericWebApplicationContext() {
-		MySpringApplication.run(HellobootApplication.class, args);
+		SpringApplication.run(HellobootApplication.class, args);
 
 
 	}
