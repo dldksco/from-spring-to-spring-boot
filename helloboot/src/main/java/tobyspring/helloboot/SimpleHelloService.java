@@ -1,5 +1,7 @@
 package tobyspring.helloboot;
 
+import org.springframework.stereotype.Component;
+
 /**
  * 실제로 구현체를 바라보게 한다면,
  * 컨트롤러가 서비스에 대한 의존 관계가 발생한다.
@@ -20,6 +22,7 @@ package tobyspring.helloboot;
  *
  * 컨트롤러 클래스에 프로퍼티를 정의해서 세터머소드를 정의해서 사용해야될 서비스 오브젝트를 정의해줌
  */
+@Component
 public class SimpleHelloService implements HelloService {
     @Override
     public String sayHello(String name) {
