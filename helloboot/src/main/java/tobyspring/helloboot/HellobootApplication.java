@@ -55,26 +55,7 @@ public class HellobootApplication {
 	public static void main(String[] args) {
 		//자바 컨픽을 읽을 수 없음
 		//		GenericWebApplicationContext applicationContext = new GenericWebApplicationContext() {
-		AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext() {
-			@Override
-			protected void onRefresh() {
-				super.onRefresh();
-
-				ServletWebServerFactory serverFactory = this.getBean(ServletWebServerFactory.class);
-				DispatcherServlet dispatcherServlet = this.getBean(DispatcherServlet.class);
-//				dispatcherServlet.setApplicationContext(this); 없어도 스프링이 직접 주입해줌
-
-				WebServer webServer = serverFactory.getWebServer(servletContext -> {
-					servletContext.addServlet("dispatcherServlet",
-							new DispatcherServlet(this)
-					).addMapping("/*");
-				});
-				webServer.start();
-			}
-		};
-		applicationContext.register(HellobootApplication.class);
-		applicationContext.refresh();
-		//톰캣 외의 제티 같은 다른 웹서버도 이용가능
+		MySpringApplication.run(HellobootApplication.class, args);
 
 
 	}
