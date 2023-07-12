@@ -38,19 +38,8 @@ import java.io.IOException;
  * 장점 : 새로운 빈 만들어서 추가할때 매번 어디다가 구성정보를 다시 등록해줄 필요없이 알아서 @Component만 달면 해결됨
  * 단점 : 정말 빈으로 등록하는 클래스가 많아진다면 정확하게 어떤 것들이 등록되는가 찾는게 매우번거로움 하지만 패키지구성과 모듈화를 잘하면
  */
-@Configuration
-@ComponentScan
+@MySpringBootAnnotation
 public class HellobootApplication {
-	//없애면 이런 오류 발생 Web application could not be started as there was no org.springframework.boot.web.servlet.server.ServletWebServerFactory bean defined in the context.
-	@Bean
-	public ServletWebServerFactory serverFactory(){
-		return new TomcatServletWebServerFactory();
-	}
-
-	@Bean
-	public DispatcherServlet dispatcherServlet() {
-		return new DispatcherServlet();
-	}
 
 	public static void main(String[] args) {
 		//자바 컨픽을 읽을 수 없음
