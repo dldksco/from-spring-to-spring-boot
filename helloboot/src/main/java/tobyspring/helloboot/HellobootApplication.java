@@ -1,30 +1,6 @@
 package tobyspring.helloboot;
 
-import org.apache.catalina.startup.Tomcat;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.WebServer;
-import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.GenericWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @Configuration을 이용하는 Application에 처음 등록됨
@@ -38,7 +14,7 @@ import java.io.IOException;
  * 장점 : 새로운 빈 만들어서 추가할때 매번 어디다가 구성정보를 다시 등록해줄 필요없이 알아서 @Component만 달면 해결됨
  * 단점 : 정말 빈으로 등록하는 클래스가 많아진다면 정확하게 어떤 것들이 등록되는가 찾는게 매우번거로움 하지만 패키지구성과 모듈화를 잘하면
  */
-@MySpringBootAnnotation
+@MySpringBootApplication
 public class HellobootApplication {
 
 	public static void main(String[] args) {
