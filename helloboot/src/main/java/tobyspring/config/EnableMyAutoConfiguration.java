@@ -1,8 +1,6 @@
-package tobyspring.helloboot.config;
+package tobyspring.config;
 
 import org.springframework.context.annotation.Import;
-import tobyspring.helloboot.config.autoconfig.DispatcherServletConfig;
-import tobyspring.helloboot.config.autoconfig.TomcatWebServerConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,8 +25,10 @@ import java.lang.annotation.Target;
  *
  * 스프링컨테이너가 하는 가장 중요한 일 빈오브젝트를 생성하고 초기화하고 관계를 맺는 라이프사이클임
  */
+
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import({DispatcherServletConfig.class, TomcatWebServerConfig.class})
+@Import(MyAutoConfigImportSelector.class)
 public @interface EnableMyAutoConfiguration {
 }
