@@ -2,11 +2,14 @@ package tobyspring.config.autoconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.DispatcherServlet;
+import tobyspring.config.MyAutoConfiguration;
+
 /**
  * 유저 구성정보에 들어가면 안됨
  * 얘네는 자동으로 등록이 되게 만들어야함 즉 컴포넌트 스캔 대상에서 제외해야함
  * 컴포넌트스캔은 기본적으로 선언된 패키지를 베이스로 스캔을함 즉 다른 패키지로 보내면됨
  */
+@MyAutoConfiguration
 public class DispatcherServletConfig {
 
     /**
