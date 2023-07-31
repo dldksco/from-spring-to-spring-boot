@@ -1,8 +1,11 @@
-package tobyspring.helloboot;
+package tobyspring.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import tobyspring.config.EnableMyAutoConfiguration;
+import tobyspring.config.autoconfig.DispatcherServletConfig;
+import tobyspring.config.autoconfig.TomcatWebServerConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,12 +26,13 @@ import java.lang.annotation.Target;
 /**
  * component에노테이션이 붙은 클래스들을 임포트로 추가해주면 직접 추가할 수 있음
  */
+//@Import({DispatcherServletConfig.class, TomcatWebServerConfig.class }) //나중에 오토컨픽이 많아지면 최상위 클래스가 많이 나열되는 거 피하는게 좋음
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Configuration
 @ComponentScan
 @EnableMyAutoConfiguration
-//@Import({DispatcherServletConfig.class, TomcatWebServerConfig.class }) 나중에 오토컨픽이 많아지면 최상위 클래스가 많이 나열되는 거 피하는게 좋음
 public @interface MySpringBootApplication {
 
 }
