@@ -1,6 +1,9 @@
 package tobyspring.helloboot;
 
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import tobyspring.config.MySpringBootApplication;
 
 /**
@@ -17,13 +20,29 @@ import tobyspring.config.MySpringBootApplication;
  */
 @MySpringBootApplication
 public class HellobootApplication {
+	/**
+	 * 우선순위 서블릿 환경변수 -> 시스템 환경변수 -> 환경변수 -> application.
+	 * my.name이면
+	 * my.name
+	 * my_name
+	 * MY.NAME
+	 * MY_NAME	전부탐색
+	 * @param env
+	 * @return
+	 */
+	@Bean
+	ApplicationRunner applicationRunner(Environment env){
+		return args ->{
+			String property = env.getProperty("my.name");
+			System.out.println(property);
+		};
+	}
+
 
 	public static void main(String[] args) {
 		//자바 컨픽을 읽을 수 없음
 		//		GenericWebApplicationContext applicationContext = new GenericWebApplicationContext() {
 		SpringApplication.run(HellobootApplication.class, args);
-
-
 	}
 
 }
