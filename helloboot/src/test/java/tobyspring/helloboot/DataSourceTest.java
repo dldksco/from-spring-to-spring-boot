@@ -12,9 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 //이걸로 모든 빈들 다 긁어옴
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = HellobootApplication.class)
-@TestPropertySource("classpath:/application.properties")
+@HelloBootTest
 public class DataSourceTest {
     @Autowired DataSource dataSource;
 
