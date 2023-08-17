@@ -14,4 +14,8 @@ public class MyOnClassCondition implements Condition {
         String value = (String)annotationAttributes.get("value");
         return ClassUtils.isPresent(value,context.getClassLoader());
     }
+
+    public static interface HelloRepository {
+
+    }
 }
