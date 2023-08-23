@@ -4,7 +4,10 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import tobyspring.config.MySpringBootApplication;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @Configuration을 이용하는 Application에 처음 등록됨
@@ -30,14 +33,16 @@ public class HellobootApplication {
 	 * @param env
 	 * @return
 	 */
-	@Bean
-	ApplicationRunner applicationRunner(Environment env){
-		return args ->{
-			String property = env.getProperty("my.name");
-			System.out.println(property);
-		};
-	}
 
+	private final JdbcTemplate jdbcTemplate;
+	public HellobootApplication(JdbcTemplate jdbcTemplate){
+		this.jdbcTemplate = jdbcTemplate;
+	}
+	@PostConstruct
+	void init(){
+			jdbcTemplate.execute("CREATE table if not exists hello(name varchar(50) primary key, count int)");
+
+	}
 
 	public static void main(String[] args) {
 		//자바 컨픽을 읽을 수 없음

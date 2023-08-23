@@ -43,16 +43,6 @@ public class ConfigurationTest {
 
     }
 
-    @Test
-    void configuration(){
-        Myconfig myconfig = new Myconfig();
-        Bean1 bean1 = myconfig.bean1();
-
-        Bean2 bean2 = myconfig.bean2();
-
-        Assertions.assertThat(bean1.common).isSameAs(bean2.common);
-
-    }
 
 
 
@@ -71,7 +61,7 @@ public class ConfigurationTest {
      * proxybean methods가 default가 true가 돼있으면
      * 클래스가 빈으로 등록될때 프록시 오브젝트를 하나 두고 그게 빈으로 등록이됨
      */
-    @Configuration
+    @Configuration()
     static class Myconfig{
         @Bean
         Common common(){

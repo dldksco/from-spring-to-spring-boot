@@ -1,6 +1,6 @@
 package tobyspring.helloboot;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 실제로 구현체를 바라보게 한다면,
@@ -22,10 +22,18 @@ import org.springframework.stereotype.Component;
  *
  * 컨트롤러 클래스에 프로퍼티를 정의해서 세터머소드를 정의해서 사용해야될 서비스 오브젝트를 정의해줌
  */
-@Component
+@Service
 public class SimpleHelloService implements HelloService {
+
+    private final HelloRepository helloRepository;
+
+    public SimpleHelloService(HelloRepository helloRepository) {
+        this.helloRepository = helloRepository;
+    }
+
     @Override
     public String sayHello(String name) {
+        this.helloRepository.increaseCount(name);
         return "Hello" + name;
     }
 }
